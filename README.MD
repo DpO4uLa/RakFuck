@@ -72,11 +72,17 @@
 | ```bot:setServerPort(int port);``` | Sets the server port for the Bot |
 | ```bot:setServerPassword(string password);``` | Sets the server password for the Bot |
 | ```bot:setName(string login);``` | Sets the name for the Bot |
-| ```bot:setLocalBotId(int botId);``` | Sets the local bot ID for the bot. Be sure to set the bot ID in any case, otherwise the onSendPacket, onSendRPC, onReceivePacket, onReceiveRPC callbacks will not work |
 | ```bot:sendConnect();``` | Sends a connect packet to the server |
 | ```bot:sendPacket(BitStream bs);``` | Sends a packet to the server |
 | ```bot:sendRPC(int id, BitStream bs);``` | Sends an RPC to the server |
 | ```bot:isConnected();``` | Returns true if the bot is connected to the server |
+| ```bot:getBotLocalId();``` | Returns the local bot ID |
+| ```bot:getName();``` | Returns the name of the bot |
+| ```bot:getServerAddr();``` | Returns the server address |
+| ```bot:getServerPort();``` | Returns the server port |
+| ```bot:getServerPassword();``` | Returns the server password |
+| ```bot:setFakePing(bool fake, int ping);``` | Sets the fake ping for the bot |
+| ```bot:getPing();``` | Returns the ping of the bot |
 
 <h2 style="text-align: center;">Misc functions</h2>
 
@@ -84,6 +90,9 @@
 | -------- | --------- |
 | ```print(string text);``` | Prints a string to the console |
 | ```setConsoleTitle(string title);``` | Sets the console title |
+| ```addEventHandler(string eventName, function handler);``` | Adds an event handler |
+| ```exit();``` | Exits the program |
+| ```getAllBots();``` | Returns a table with all bots |
 
 <h2 style="text-align: center;">Events</h2>
 
@@ -118,6 +127,18 @@ function onReceiveRPC(botId, rpcId, bs)
     -- botId - local bot ID
     -- rpcId - RPC ID
     -- bs - BitStream object
+    return true/false; -- return true to continue, false to stop
+end
+```
+
+| Called when the bot sends an outgoing RPC |
+| -------- |
+```lua
+function onSendRPC(botId, rpcId, bs)
+    -- botId - local bot ID
+    -- rpcId - RPC ID
+    -- bs - BitStream object
+    return true/false; -- return true to continue, false to stop
 end
 ```
 
@@ -127,6 +148,17 @@ end
 function onReceivePacket(botId, bs)
     -- botId - local bot ID
     -- bs - BitStream object
+    return true/false; -- return true to continue, false to stop
+end
+```
+
+| Called when the bot sends an outgoing packet |
+| -------- |
+```lua
+function onSendPacket(botId, bs)
+    -- botId - local bot ID
+    -- bs - BitStream object
+    return true/false; -- return true to continue, false to stop
 end
 ```
 
